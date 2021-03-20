@@ -1,0 +1,10 @@
+package com.Helpdesk.Maple3.repositories;
+
+import com.Helpdesk.Maple3.entities.Account;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository("accountRepository")
+public interface AccountRepository extends CrudRepository<Account, Integer> {
+
+}

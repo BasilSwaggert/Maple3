@@ -22,7 +22,8 @@ public class TemplateConfiguration implements WebMvcConfigurer {
         TilesConfigurer configurer = new TilesConfigurer();
         configurer.setDefinitions(new String[] {
                 "/WEB-INF/tiles/tiles.xml",
-                "/WEB-INF/tiles/tiles_dashboard.xml"
+                "/WEB-INF/tiles/tiles_dashboard.xml",
+                "/WEB-INF/tiles/tiles_login.xml"
         });
         return configurer;
     }
