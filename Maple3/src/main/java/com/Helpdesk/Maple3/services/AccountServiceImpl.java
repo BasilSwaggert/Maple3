@@ -29,4 +29,14 @@ public class AccountServiceImpl implements AccountService {
         grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
         return new User(account.getUsername(), account.getPassword(), grantedAuthorities);
     }
+
+    @Override
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public Account findByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
 }

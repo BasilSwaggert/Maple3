@@ -1,6 +1,7 @@
 package com.Helpdesk.Maple3.controllers;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(value = "login-panel")
+@RequestMapping(value = { "", "login-panel" })
 public class LoginController {
 
     @RequestMapping(value = { "", "index" }, method = RequestMethod.GET)
     public String index() {
+        String password = "123";
+        String hash = new BCryptPasswordEncoder().encode("123");
+        System.out.println(hash);
         return "redirect:/login-panel/login";
     }
 
@@ -27,7 +31,7 @@ public class LoginController {
         if (logout != null) {
             modelMap.put("msg", "Logout successfully");
         }
-        return "admin.login.index";
+        return "login.index";
     }
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
@@ -43,11 +47,20 @@ public class LoginController {
         } else {
             modelMap.put("msg", "You do not have permission to access this page!");
         }
-        return "admin.login.accessDenied";
+        return "login.accessDenied";
     }
 
+    //Use Authentication authentication in parameters?
     @RequestMapping(value = "welcome", method = RequestMethod.GET)
     public String welcome() {
-        return "redirect:/dashboard";
+//        boolean hasEmployeeRole = authentication.getAuthorities().stream()
+//                .anyMatch(r -> r.getAuthority().equals("ROLE_EMPLOYEE"));
+//        boolean hasAdminRole = authentication.getAuthorities().stream()
+//                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+//        if (hasAdminRole) {
+            return "redirect:/dashboard";
+//        } else {
+//            return "redirect:/employee/dashboard";
+//        }
     }
 }

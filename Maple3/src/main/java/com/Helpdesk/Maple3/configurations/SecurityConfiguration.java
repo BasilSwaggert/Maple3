@@ -21,11 +21,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable();
 
-        httpSecurity.antMatcher("/**")
-                .authorizeRequests()
-                .antMatchers("/**")
-                .access("hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
-                .and().formLogin()
+        httpSecurity.authorizeRequests()
+                .antMatchers("/dashboard/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
+                .antMatchers("/account/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
+                .and()
+                .formLogin()
                 .loginPage("/login-panel")
                 .loginProcessingUrl("/login/process-login")
                 .defaultSuccessUrl("/login-panel/welcome")
@@ -33,9 +33,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
-                .logoutUrl("/login/process-logout")
+                .logoutUrl("/process-logout")
                 .logoutSuccessUrl("/login-panel/login?logout")
-                .deleteCookies("JSESSIONID").and().exceptionHandling().accessDeniedPage("/login-panel/accessDenied");
+                .deleteCookies("JSESSIONID")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/login-panel/accessDenied");
     }
 
     @Autowired
